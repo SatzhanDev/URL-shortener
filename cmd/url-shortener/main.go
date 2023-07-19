@@ -16,9 +16,12 @@ const (
 func main() {
 	// TODO: init config: cleanenv
 	cfg := config.MustLoad()
+
 	log := setupLogger(cfg.Env)
-	log.Info("starting url-shortener", slog.String("env", cfg.Env))
-	log.Debug("debug messages are enabled")
+	log = log.With(slog.String("env", cfg.Env)) // к каждому сообщению будет добавляться поле с информацией о текущем окружении
+
+	log.Info("initializing server", slog.String("address", cfg.Address)) // Помимо сообщения выведем параметр с адресом
+	log.Debug("logger debug mode enabled")
 	// TODO: init logger: slog
 	// TODO: storage: sqlite
 	// TODO: init router: chi, "chi render"
