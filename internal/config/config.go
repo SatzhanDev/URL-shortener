@@ -9,7 +9,7 @@ import (
 )
 
 type Config struct {
-	Env         string `yaml:"environment" env:"ENV" env-default:"local"`
+	Env         string `yaml:"environment" env-default:"local"`
 	StoragePath string `yaml:"storage_path" env-required:"true"`
 	HTTPServer  `yaml:"http_server"`
 }
@@ -28,14 +28,14 @@ func MustLoad() *Config {
 	}
 
 	// check if file exists
-	if _, err := os.Stat(configPath); os.IsNotExist(err) {
+	if _, err := os.Stat(configPath); err != nil {
 		log.Fatalf("error opening config file: %s", configPath)
 	}
 
 	var cfg Config
 
 	if err := cleanenv.ReadConfig(configPath, &cfg); err != nil {
-		log.Fatalf("cannot read config: %s", err)
+		log.Fatalf("error reading config: %s", err)
 	}
 
 	return &cfg

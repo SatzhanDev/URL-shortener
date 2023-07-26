@@ -3,6 +3,8 @@ package main
 import (
 	"os"
 	"url-shortener/internal/config"
+	"url-shortener/internal/lib/logger/sl"
+	"url-shortener/internal/storage/sqlite"
 
 	"golang.org/x/exp/slog"
 )
@@ -17,13 +19,30 @@ func main() {
 	// TODO: init config: cleanenv
 	cfg := config.MustLoad()
 
+	// TODO: init logger: slog
 	log := setupLogger(cfg.Env)
 	log = log.With(slog.String("env", cfg.Env)) // к каждому сообщению будет добавляться поле с информацией о текущем окружении
 
 	log.Info("initializing server", slog.String("address", cfg.Address)) // Помимо сообщения выведем параметр с адресом
 	log.Debug("logger debug mode enabled")
-	// TODO: init logger: slog
+
 	// TODO: storage: sqlite
+	storage, err := sqlite.NewStorage(cfg.StoragePath)
+	if err != nil {
+		log.Error("failed to init storage", sl.Err(err))
+		os.Exit(1)
+	}
+
+	id, err := storage.SaveURL("https://translate.google.com/", "translate")
+	if err != nil {
+		log.Error("failed to save url", sl.Err(err))
+		os.Exit(1)
+	}
+
+	log.Info("saved url", slog.Int64("id", id))
+
+	_ = storage
+
 	// TODO: init router: chi, "chi render"
 	// TODO: run server:
 }
