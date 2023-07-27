@@ -86,3 +86,8 @@ func (s *Storage) GetURL(alias string) (string, error) {
 	}
 	return resURL, nil
 }
+
+// TODO: implement function below
+// func (s *Storage) DeleteURL(alias string)error{
+
+// }

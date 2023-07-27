@@ -6,6 +6,8 @@ import (
 	"url-shortener/internal/lib/logger/sl"
 	"url-shortener/internal/storage/sqlite"
 
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"golang.org/x/exp/slog"
 )
 
@@ -32,10 +34,13 @@ func main() {
 		log.Error("failed to init storage", sl.Err(err))
 		os.Exit(1)
 	}
-
 	_ = storage
 
 	// TODO: init router: chi, "chi render"
+	router := chi.NewRouter()
+	// TODO: middleware
+	router.Use(middleware.RequestID)
+	router.Use(middleware.Logger)
 	// TODO: run server:
 }
 
