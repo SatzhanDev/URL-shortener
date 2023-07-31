@@ -11,6 +11,7 @@ require (
 	github.com/go-chi/render v1.0.3 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
+	github.com/go-playground/validator v9.31.0+incompatible // indirect
 	github.com/go-playground/validator/v10 v10.14.1 // indirect
 	github.com/ilyakaznacheev/cleanenv v1.4.2 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
