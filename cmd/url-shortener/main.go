@@ -58,7 +58,7 @@ func main() {
 		Addr:         cfg.Address,
 		Handler:      router,
 		ReadTimeout:  cfg.HTTPServer.Timeout,
-		WriteTimeout: cfg.HTTPServer.Timeout,
+		WriteTimeout: cfg.HTTPServer.Timeout, 
 		IdleTimeout:  cfg.HTTPServer.IdleTimeout,
 	}
 
